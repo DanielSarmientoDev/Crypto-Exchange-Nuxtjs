@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.8.3",
     "nuxt": "^2.14.12",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^3.4.2",
+    "@nuxtjs/vuetify": "^1.11.3",
     "@tailwindcss/postcss7-compat": "^2.0.3",
     "@vue/test-utils": "^1.1.2",
     "autoprefixer": "^9.8.6",
@@ -25,9 +27,12 @@
     "babel-jest": "^26.6.3",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "fibers": "^5.0.0",
     "jest": "^26.6.3",
     "postcss": "^7.0.35",
     "prettier": "^2.2.1",
+    "sass": "^1.32.7",
+    "sass-loader": "10",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
     "vue-jest": "^3.0.4"
   }
