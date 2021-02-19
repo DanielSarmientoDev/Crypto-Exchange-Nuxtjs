@@ -1,7 +1,7 @@
 <template>
-  <v-app class="bg-white w-screen h-screen">
+  <v-app class="w-screen h-screen">
     <navBar />
-    <v-main>
+    <v-main class="bg-light">
       <Nuxt />
     </v-main>
   </v-app>
