@@ -13,9 +13,13 @@
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/pwa": "^3.3.5",
+    "ag-grid-community": "^25.1.0",
+    "ag-grid-vue": "^25.1.0",
     "core-js": "^3.8.3",
     "nuxt": "^2.14.12",
     "vue-currency-filter": "^5.2.0",
+    "vue-filter-number-format": "^3.0.1",
+    "vue-property-decorator": "^8.0.0",
     "vuesax": "^4.0.1-alpha.25"
   },
   "devDependencies": {

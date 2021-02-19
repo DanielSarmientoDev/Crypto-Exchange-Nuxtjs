@@ -1,23 +1,22 @@
 import Vue from 'vue'
-import VueCurrencyFilter from 'vue-currency-filter'
+Vue.filter('percentFilter', function (value) {
+  if (!value) {
+    return '0%'
+  }
 
-Vue.use(VueCurrencyFilter, {
-  symbol: '$',
-  thousandsSeparator: '.',
-  fractionCount: 2,
-  fractionSeparator: ',',
-  symbolPosition: 'front',
-  symbolSpacing: true,
-  avoidEmptyDecimals: undefined,
+  return `${Number(value).toFixed(2)}%`
 })
 
-Vue.filter('formatDate', (value) => {
-  const date = new Date(value)
-  return date.toLocaleString(['en-US'], {
-    month: 'short',
-    day: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
+Vue.filter('currency', function (value) {
+  return '$' + parseFloat(value).toFixed(0) + ' USD'
+})
+
+Vue.filter('numFormat', function (value) {
+  if (value > 999 && value < 1000000) {
+    return (value / 1000).toFixed(0) + ' K' // convert to K for valueber from > 1000 < 1 million
+  } else if (value > 1000000) {
+    return (value / 1000000).toFixed(0) + ' M' // convert to M for valueber from > 1 million
+  } else if (value < 900) {
+    return (value / 900).toFixed(5) // if value < 1000, nothing to do
+  }
 })

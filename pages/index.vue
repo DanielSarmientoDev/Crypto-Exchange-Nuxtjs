@@ -14,44 +14,43 @@
         single-line
       ></v-text-field>
     </div>
-
     <v-data-table
       id="table-container"
-      :headers="headers"
-      :items="coins"
-      hide-default-footer
-      :search="search"
       :items-per-page="5"
       class="table-history"
+      :headers="headers"
+      :search="search"
+      :items="coins"
+      hide-default-footer
+      single-select
+      sort-by="position"
+      sort-desc
     >
-      <template slot="items" slot-scope="props">
-        <td>{{ props.item.rank }}</td>
-        <td class="text-xs-right">
-          {{ props.item.name }}
-        </td>
-        <td class="text-xs-right">
-          {{ props.item.supply }}
-        </td>
-        <td class="text-xs-right">
-          {{ props.item.maxSupply }}
-        </td>
-        <td class="text-xs-right">
-          {{ props.item.marketCapUsd }}
-        </td>
-        <td class="text-xs-right">
-          {{ props.item.volumeUsd24Hr }}
-        </td>
-        <td class="text-xs-right">
-          {{ props.item.changePercent24Hr }}
-        </td>
-        <td class="text-xs-right">
-          {{ props.item.priceUsd | formatDate }}
-        </td>
+      <template v-slot:item="{ item }">
+        <tr>
+          <td>
+            {{ item.rank }}
+          </td>
+          <td>
+            {{ item.name }}
+            {{ item.symbol }}
+          </td>
+          <td v-if="item.priceUsd != null">
+            {{ item.priceUsd | currency }}
+          </td>
+          <td v-else>Not found</td>
+          <td v-if="item.marketCapUsd != null">
+            {{ item.marketCapUsd | numFormat }}
+          </td>
+          <td v-else>Not found</td>
+          <td>
+            {{ item.changePercent24Hr | percentFilter }}
+          </td>
+        </tr>
       </template>
     </v-data-table>
   </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -59,33 +58,39 @@ export default {
       search: '',
       coins: [],
       headers: [
-        { text: 'Rank', value: 'rank' },
+        { text: 'Ranking', value: 'rank' },
         { text: 'Nombre', value: 'name' },
-        { text: 'Supply', value: 'supply' },
-        { text: 'Max Supply', value: 'maxSupply' },
-        { text: 'Market Cap Usd', value: 'marketCapUsd' },
-        { text: 'Volume Usd 24Hr', value: 'volumeUsd24Hr' },
-        { text: 'Change Percent 24Hr', value: 'changePercent24Hr' },
         { text: 'Precio', value: 'priceUsd' },
+        { text: '	Cap. de Mercado', value: 'marketCapUsd' },
+        { text: 'Variación 24hr', value: 'changePercent24Hr' },
       ],
     }
   },
   methods: {
-    async getData() {
-      await this.$axios.get('/assets?limit=1000').then((response) => {
-        this.coins = response.data.data
-        console.log(response)
-      })
+    async getCoins() {
+      await this.$axios
+        .get('/assets?limit=1000')
+        .then((response) => {
+          this.coins = response.data.data
+          this.$vs.notification({
+            title: 'Carga completa',
+            sticky: true,
+            color: '#7c9dd5',
+            text: `Se ha cargado los datos correctamente.`,
+          })
+        })
+        .catch((error) => {
+          this.$vs.notification({
+            title: 'welcome',
+            sticky: true,
+            color: 'danger',
+            text: `${error}`,
+          })
+        })
     },
   },
   mounted() {
-    this.getData()
-    this.$vs.notification({
-      title: 'welcome',
-      sticky: true,
-      color: '#7c9dd5',
-      text: `If you want to give us your opinion, find me on my social networks.`,
-    })
+    this.getCoins()
   },
 }
 </script>
