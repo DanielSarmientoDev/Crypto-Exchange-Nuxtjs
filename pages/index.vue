@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container md:container h-3/4 sm:mx-auto mt-10 rounded-xl bg-light"
+    class="container md:container h-screen sm:mx-auto mt-10 rounded-xl bg-light"
   >
     <div
       class="container md:container relative h-20 sm:mx-auto mt-10 rounded-xl bg-light"
@@ -49,6 +49,12 @@
         </tr>
       </template>
     </v-data-table>
+    <vs-button>
+      Ver información detallada
+      <template #animate>
+        <v-icon>mdi-plus</v-icon>
+      </template>
+    </vs-button>
   </div>
 </template>
 <script>
